@@ -2,15 +2,16 @@
 
 const visor = document.getElementById('visor');
 const botoes = document.querySelectorAll('.numero');
-const limpar = document.getElementById('reset')
+const limpar = document.getElementById('reset');
 const executar = document.getElementById('efetuar');
-const operacoes = document.querySelectorAll('.operador')
-const historico = document.getElementById('historico')
-let itemHistorico = document.querySelectorAll('.item_historico')
-let valor1
-let valor2
-let operador
-let total
+const operacoes = document.querySelectorAll('.operador');
+const historico = document.getElementById('historico');
+let itemHistorico = document.querySelectorAll('.item_historico');
+let arrayHistorico = [];
+let valor1;
+let valor2;
+let operador;
+let total;
 
 // - - - EVENTOS - - -
 
@@ -82,11 +83,13 @@ function inserirHistorico(valor1, valor2, operador, total) {
     let data = new Date();
     let dataCompleta = `${data.toLocaleDateString()} ${data.toLocaleTimeString()}`;
 
-    historico.innerHTML += `
+    arrayHistorico.push(`
         <tr>
             <td>${dataCompleta}</td>
             <td class="item_historico" value="${total}">${valor1} ${operador} ${valor2}</td>
-        </tr>`;
+        </tr>`);
+
+    atualizaHistorico();
 
     itemHistorico = document.querySelectorAll('.item_historico')
     itemHistorico.forEach((btn) => {
@@ -95,3 +98,18 @@ function inserirHistorico(valor1, valor2, operador, total) {
         })
     });
 };
+
+function atualizaHistorico() {
+    historico.innerHTML = `
+        <tr>
+            <th colspan="2">HISTÓRICO</th>
+        </tr>`;
+
+    if (arrayHistorico.length > 4) {
+        arrayHistorico.shift();
+    };
+
+    arrayHistorico.forEach((info) => {
+        historico.innerHTML += info;
+    });
+}
