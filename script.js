@@ -15,6 +15,7 @@ let total;
 
 // - - - EVENTOS - - -
 
+// Visualiza o botão clicado e adiciona o valor dele na tela
 botoes.forEach((btn) => {
     btn.addEventListener('click', () => {
         if (visor.innerHTML == '0') {
@@ -35,16 +36,20 @@ executar.addEventListener('click', () => {
 
 // - - - FUNÇÕES - - -
 
+// Define o visor como zero
 function limpaVisor() {
     visor.innerHTML = '0';
 };
 
+// Grava o primeiro valor e a operação a ser realizada. Executa ao clicar em um botão de operação
 function operacao(operando) {
     valor1 = parseFloat(visor.innerHTML);
     operador = operando;
     visor.innerHTML = '0';
 };
 
+
+// Define o segundo valor do visor, executa o cálculo da operação e apresenta no visor. Após isso, insere no histórico
 function executarCalculo() {
     valor2 = parseFloat(visor.innerHTML);
 
@@ -79,6 +84,7 @@ function executarCalculo() {
     inserirHistorico(valor1, valor2, operador, total);
 };
 
+// Insere a conta feita no array do histórico, com informações de data e hora e operação realizada
 function inserirHistorico(valor1, valor2, operador, total) {
     let data = new Date();
     let dataCompleta = `${data.toLocaleDateString()} ${data.toLocaleTimeString()}`;
@@ -99,6 +105,7 @@ function inserirHistorico(valor1, valor2, operador, total) {
     });
 };
 
+// Atualiza as informações do histórico com base no array, quando passa de 4 informações, remove a mais antiga.
 function atualizaHistorico() {
     historico.innerHTML = `
         <tr>
